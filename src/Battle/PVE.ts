@@ -1,5 +1,4 @@
 import Fighter, { SimpleFighter } from '../Fighter';
-import randomNumber from '../utils';
 import Battle from './Battle';
 
 class PVE extends Battle {
@@ -8,22 +7,15 @@ class PVE extends Battle {
   }
 
   private playerTurnAttack(): number | void {
-    let target = randomNumber(0, this.monsterArray.length - 1);
-
-    const enemiesDefeted: number[] = [];
-
-    this.player.attack(this.monsterArray[target]);
-    if (this.monsterArray[target].lifePoints === -1) {
-      enemiesDefeted.push(target);
-
-      if (enemiesDefeted.length === this.monsterArray.length) {
-        return 1;
+    let result;
+    this.monsterArray.forEach((monster, index) => {
+      this.player.attack(this.monsterArray[index]);
+      if (this.monsterArray[index].lifePoints === -1) {
+        result = 1;
       }
+    });
 
-      while (enemiesDefeted.includes(target)) {
-        target = randomNumber(0, this.monsterArray.length - 1);
-      }
-    }
+    return result;
   }
 
   private monstersTurnAttack(): number | void {
@@ -50,18 +42,18 @@ class PVE extends Battle {
       result = 1;
     }, 10000);
 
-    while (!result) {
+    while (result === 0) {
       // Player's turn
       const resultsPlayerTurn = this.playerTurnAttack(); 
 
-      if (resultsPlayerTurn) {
+      if (resultsPlayerTurn === 1) {
         result = resultsPlayerTurn;
       }
 
       // Enemy's turn
       const resultsMonstersTurn = this.monstersTurnAttack();
 
-      if (resultsMonstersTurn) {
+      if (resultsMonstersTurn === -1) {
         result = resultsMonstersTurn;
       }
     }

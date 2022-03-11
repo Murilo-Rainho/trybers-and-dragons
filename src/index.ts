@@ -27,14 +27,9 @@ const player3 = new Character(
   new Warrior('Gimli'),
 );
 
-player1.levelUp();
-player1.levelUp();
-player1.levelUp();
-player1.levelUp();
-player1.levelUp();
-player1.levelUp();
-player1.levelUp();
-player1.levelUp();
+for (let i = 0; i < 50; i += 1) {
+  player1.levelUp();
+}
 
 const monster1 = new Monster();
 const monster2 = new Dragon();
