@@ -43,26 +43,25 @@ class PVE extends Battle {
   }
 
   fight(): number {
-    const result = 0;
+    let result = 0;
 
     while (!result) {
       // Player's turn
       const resultsPlayerTurn = this.playerTurnAttack(); 
 
       if (resultsPlayerTurn) {
-        return resultsPlayerTurn;
+        result = resultsPlayerTurn;
       }
 
       // Enemy's turn
       const resultsMonstersTurn = this.monstersTurnAttack();
 
       if (resultsMonstersTurn) {
-        return resultsMonstersTurn;
+        result = resultsMonstersTurn;
       }
     }
 
-    // Player won by enemy weariness
-    return 1;
+    return result;
   }
 }
 
