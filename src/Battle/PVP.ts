@@ -9,6 +9,11 @@ class PVP extends Battle {
   fight(): number {
     let result = 0;
 
+    setTimeout(() => {
+      // Player won by opponent's resignation
+      result = 1;
+    }, 10000);
+
     while (!result) {
       // Player's turn
       this.player.attack(this.enemyPlayer);
