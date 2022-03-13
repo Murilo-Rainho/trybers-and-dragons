@@ -2,21 +2,21 @@ import Fighter, { SimpleFighter } from '../Fighter';
 import Battle from './Battle';
 
 class PVE extends Battle {
+  private target = 0;
+
   constructor(player: Fighter, private monsterArray: SimpleFighter[]) {
     super(player);
   }
 
-  private playerTurnAttack(): number | void {
-    let result;
+  private playerTurnAttack(): void {
+    // Now, to be more like a real RPG, the player does not attack all monsters
+    // in one turn. It will attack the first monster, until it dies and the
+    // second becomes first.
+    this.player.attack(this.monsterArray[this.target]);
 
-    this.monsterArray.forEach((monster) => {
-      this.player.attack(monster);
-      if (monster.lifePoints === -1) {
-        result = 1;
-      }
-    });
-
-    return result;
+    if (this.monsterArray[this.target].lifePoints === -1) {
+      this.target += 1;
+    }
   }
 
   private monstersTurnAttack(): number | void {
@@ -45,10 +45,10 @@ class PVE extends Battle {
 
     while (result === 0) {
       // Player's turn
-      const resultsPlayerTurn = this.playerTurnAttack(); 
+      this.playerTurnAttack(); 
 
-      if (resultsPlayerTurn === 1) {
-        result = resultsPlayerTurn;
+      if (this.target === this.monsterArray.length) {
+        result = 1;
       }
 
       // Enemy's turn
