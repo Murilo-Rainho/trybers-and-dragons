@@ -8,9 +8,10 @@ class PVE extends Battle {
 
   private playerTurnAttack(): number | void {
     let result;
-    this.monsterArray.forEach((monster, index) => {
-      this.player.attack(this.monsterArray[index]);
-      if (this.monsterArray[index].lifePoints === -1) {
+
+    this.monsterArray.forEach((monster) => {
+      this.player.attack(monster);
+      if (monster.lifePoints === -1) {
         result = 1;
       }
     });
